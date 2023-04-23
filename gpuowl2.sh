@@ -106,7 +106,7 @@ else
 	cd "$DIR"
 	if command -v git >/dev/null; then
 		echo -e "Downloading GpuOwl\n"
-		git clone https://github.com/preda/gpuowl.git $DIR1
+		git clone https://github.com/tbabej/gpuowl.git $DIR1
 		cp -r $DIR1/ $DIR2/
 		cp -r $DIR1/ $DIR3/
 		sed -i 's/--dirty //' $DIR1/Makefile
@@ -122,10 +122,10 @@ else
 		popd >/dev/null
 	else
 		echo -e "Downloading GpuOwl v6.11\n"
-		wget https://github.com/preda/gpuowl/archive/v6.tar.gz
+		wget https://github.com/tbabej/gpuowl/archive/v6.tar.gz
 		echo -e "\nDecompressing the files\n"
 		tar -xzvf v6.tar.gz
-		if output=$(curl -s 'https://api.github.com/repos/preda/gpuowl/compare/v6.11...v6'); then
+		if output=$(curl -s 'https://api.github.com/repos/tbabej/gpuowl/compare/v6.11...v6'); then
 			if command -v jq >/dev/null; then
 				behind_by=$(echo "$output" | jq '.behind_by')
 				sha=$(echo "$output" | jq -r '.base_commit.sha')
@@ -136,22 +136,22 @@ else
 			sed -i 's/`git describe --long --dirty --always`/v6.11'"-${behind_by}-g${sha::7}"'/' $DIR3/Makefile
 		fi
 		echo -e "Downloading GpuOwl v7.2-112\n"
-		wget https://github.com/preda/gpuowl/archive/d6ad1e0cf5a323fc4e0ee67e79884448a503a818.tar.gz
+		wget https://github.com/tbabej/gpuowl/archive/d6ad1e0cf5a323fc4e0ee67e79884448a503a818.tar.gz
 		echo -e "\nDecompressing the files\n"
 		tar -xzvf v6.tar.gz
 		mv -v gpuowl-d6ad1e0cf5a323fc4e0ee67e79884448a503a818/ $DIR2/
 		sed -i 's/`git describe --long --dirty --always`/v7.2-112-gd6ad1e0/' $DIR2/Makefile
 		echo -e "\nDownloading the current version of GpuOwl\n"
-		wget https://github.com/preda/gpuowl/archive/master.tar.gz
+		wget https://github.com/tbabej/gpuowl/archive/master.tar.gz
 		echo -e "\nDecompressing the files\n"
 		tar -xzvf master.tar.gz
-		if output=$(curl -s 'https://api.github.com/repos/preda/gpuowl/tags?per_page=1'); then
+		if output=$(curl -s 'https://api.github.com/repos/tbabej/gpuowl/tags?per_page=1'); then
 			if command -v jq >/dev/null; then
 				name=$(echo "$output" | jq -r '.[0].name')
 			else
 				name=$(echo "$output" | python3 -c 'import sys, json; print(json.load(sys.stdin)[0]["name"])')
 			fi
-			if output=$(curl -s "https://api.github.com/repos/preda/gpuowl/compare/master...$name"); then
+			if output=$(curl -s "https://api.github.com/repos/tbabej/gpuowl/compare/master...$name"); then
 				if command -v jq >/dev/null; then
 					behind_by=$(echo "$output" | jq '.behind_by')
 					sha=$(echo "$output" | jq -r '.base_commit.sha')
